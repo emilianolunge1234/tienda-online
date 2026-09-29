@@ -1,0 +1,74 @@
+# =====================================================================
+# Visual Studio / .NET Framework - salida de compilación y dependencias
+# =====================================================================
+
+# Resultados de compilación
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Paquetes NuGet (se restauran al abrir la solución)
+packages/
+*.nupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# =====================================================================
+# Visual Studio
+# =====================================================================
+
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.opendb
+*.VC.db
+
+# Perfiles de compilación de VS
+[Bb]uild[Ll]og.*
+*.VisualState.xml
+TestResult.xml
+*.ncb
+*.opensdf
+*.sdf
+*.cachefile
+*.VC.VC.opendb
+
+# Resultados de pruebas
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.trx
+
+# Publicación de la web
+PublishScripts/
+*.[Pp]ublish.xml
+*.azurePubxml
+*.pubxml
+*.publishproj
+
+# =====================================================================
+# Sistema
+# =====================================================================
+
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# =====================================================================
+# Editores
+# =====================================================================
+
+*.swp
+*~
+.idea/
+.vscode/

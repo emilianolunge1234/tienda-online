@@ -1,0 +1,455 @@
+﻿/* ==========================================================================
+   Tienda Online - hoja de estilos principal
+   Se carga después de bootstrap.css (Bundle.config -> ~/Content/css),
+   por lo que puede ajustar lo que necesite sin perder especificidad.
+   ========================================================================== */
+
+:root {
+    --c-fondo: #f4f6fa;
+    --c-superficie: #ffffff;
+    --c-texto: #1f2933;
+    --c-texto-suave: #5b6b7c;
+    --c-borde: #dde3ec;
+    --c-primario: #1d4ed8;
+    --c-primario-hover: #1e40af;
+    --c-peligro: #dc2626;
+    --c-peligro-hover: #b91c1c;
+    --c-ok: #15803d;
+    --c-radio: 10px;
+    --c-sombra: 0 1px 2px rgba(15, 23, 42, 0.06), 0 8px 24px rgba(15, 23, 42, 0.07);
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+
+body {
+    background-color: var(--c-fondo);
+    color: var(--c-texto);
+    font-family: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+}
+
+h1 {
+    font-size: 1.9rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.35rem;
+}
+
+h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+a {
+    color: var(--c-primario);
+}
+
+a:hover {
+    color: var(--c-primario-hover);
+}
+
+code {
+    background: #eef2f7;
+    border: 1px solid var(--c-borde);
+    border-radius: 5px;
+    color: #334155;
+    font-size: 0.9em;
+    padding: 0.1em 0.4em;
+}
+
+.body-content {
+    margin-top: 24px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+@media screen and (min-width: 768px) {
+    .body-content {
+        padding: 0;
+    }
+}
+
+.lead {
+    color: var(--c-texto-suave);
+    font-size: 1.05rem;
+    margin-bottom: 1.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   Barra de navegación
+   -------------------------------------------------------------------------- */
+
+.navbar {
+    box-shadow: 0 1px 0 rgba(15, 23, 42, 0.12);
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.navbar .nav-link {
+    border-radius: 6px;
+    padding: 0.4rem 0.75rem !important;
+}
+
+.navbar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* --------------------------------------------------------------------------
+   Pie de página
+   -------------------------------------------------------------------------- */
+
+footer {
+    color: var(--c-texto-suave);
+    font-size: 0.9rem;
+    padding: 1rem 0 2rem;
+}
+
+hr {
+    border-top: 1px solid var(--c-borde);
+    margin: 1.75rem 0;
+}
+
+/* --------------------------------------------------------------------------
+   Portada: tarjetas de navegación
+   -------------------------------------------------------------------------- */
+
+.hero {
+    margin-bottom: 2rem;
+    padding-top: 0.5rem;
+}
+
+.menu-grid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    margin-bottom: 2rem;
+}
+
+.menu-card {
+    background-color: var(--c-superficie);
+    border: 1px solid var(--c-borde);
+    border-left: 4px solid var(--c-primario);
+    border-radius: var(--c-radio);
+    box-shadow: var(--c-sombra);
+    color: var(--c-texto);
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1.35rem 1.35rem 1.15rem;
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.menu-card:hover {
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.1), 0 16px 32px rgba(15, 23, 42, 0.1);
+    color: var(--c-texto);
+    text-decoration: none;
+    transform: translateY(-3px);
+}
+
+.menu-card__icon {
+    color: var(--c-primario);
+    font-size: 1.7rem;
+    line-height: 1;
+}
+
+.menu-card__titulo {
+    font-size: 1.1rem;
+    font-weight: 650;
+}
+
+.menu-card__desc {
+    color: var(--c-texto-suave);
+    font-size: 0.92rem;
+}
+
+.menu-card__accion {
+    color: var(--c-primario);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: auto;
+    padding-top: 0.6rem;
+}
+
+/* Colores de acento por operación */
+.menu-card--alta {
+    border-left-color: #15803d;
+}
+
+.menu-card--alta .menu-card__icon,
+.menu-card--alta .menu-card__accion {
+    color: #15803d;
+}
+
+.menu-card--consulta {
+    border-left-color: #1d4ed8;
+}
+
+.menu-card--modificacion {
+    border-left-color: #b45309;
+}
+
+.menu-card--modificacion .menu-card__icon,
+.menu-card--modificacion .menu-card__accion {
+    color: #b45309;
+}
+
+.menu-card--baja {
+    border-left-color: var(--c-peligro);
+}
+
+.menu-card--baja .menu-card__icon,
+.menu-card--baja .menu-card__accion {
+    color: var(--c-peligro);
+}
+
+/* --------------------------------------------------------------------------
+   Páginas interiores
+   -------------------------------------------------------------------------- */
+
+.pagina {
+    margin-bottom: 2rem;
+}
+
+/* Tarjeta que contiene el formulario */
+.formulario {
+    background-color: var(--c-superficie);
+    border: 1px solid var(--c-borde);
+    border-radius: var(--c-radio);
+    box-shadow: var(--c-sombra);
+    margin-bottom: 1.5rem;
+    max-width: 640px;
+    padding: 1.75rem 2rem;
+}
+
+.separador {
+    margin: 1.5rem 0;
+}
+
+.campo {
+    margin-bottom: 1.15rem;
+}
+
+.campo > label {
+    color: var(--c-texto);
+    display: block;
+    font-size: 0.92rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+}
+
+input[type="text"],
+input[type="password"],
+select,
+textarea {
+    background-color: #fff;
+    border: 1px solid var(--c-borde);
+    border-radius: 7px;
+    color: var(--c-texto);
+    font-size: 1rem;
+    max-width: 100%;
+    padding: 0.55rem 0.7rem;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    width: 100%;
+}
+
+input[type="text"]:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--c-primario);
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.15);
+    outline: none;
+}
+
+select {
+    cursor: pointer;
+}
+
+/* Mensajes de los validadores de ASP.NET */
+.validacion {
+    color: var(--c-peligro);
+    display: block;
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+}
+
+/* Mensajes de resultado de la operación */
+.mensaje {
+    border-radius: 7px;
+    display: block;
+    font-size: 0.95rem;
+    margin-top: 1rem;
+    padding: 0.7rem 0.9rem;
+}
+
+.mensaje:empty {
+    display: none;
+}
+
+.mensaje--ok {
+    background-color: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: var(--c-ok);
+}
+
+.mensaje--error {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    color: var(--c-peligro);
+}
+
+.nota {
+    background-color: #fffbeb;
+    border-left: 4px solid #f59e0b;
+    border-radius: 0 var(--c-radio) var(--c-radio) 0;
+    color: #78350f;
+    font-size: 0.92rem;
+    margin-top: 1.25rem;
+    max-width: 760px;
+    padding: 0.85rem 1rem;
+}
+
+/* --------------------------------------------------------------------------
+   Botones
+   -------------------------------------------------------------------------- */
+
+.btn {
+    background-color: var(--c-superficie);
+    border: 1px solid var(--c-borde);
+    border-radius: 7px;
+    color: var(--c-texto);
+    cursor: pointer;
+    display: inline-block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.4;
+    padding: 0.55rem 1.1rem;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn:hover {
+    background-color: #f1f5f9;
+    border-color: #c7d0dc;
+    color: var(--c-texto);
+    text-decoration: none;
+}
+
+.btn--primario {
+    background-color: var(--c-primario);
+    border-color: var(--c-primario);
+    color: #fff;
+}
+
+.btn--primario:hover {
+    background-color: var(--c-primario-hover);
+    border-color: var(--c-primario-hover);
+    color: #fff;
+}
+
+.btn--secundario {
+    background-color: var(--c-superficie);
+    border-color: var(--c-borde);
+    color: var(--c-texto);
+}
+
+.btn--peligro {
+    background-color: var(--c-peligro);
+    border-color: var(--c-peligro);
+    color: #fff;
+    font-size: 0.85rem;
+    padding: 0.35rem 0.8rem;
+}
+
+.btn--peligro:hover {
+    background-color: var(--c-peligro-hover);
+    border-color: var(--c-peligro-hover);
+    color: #fff;
+}
+
+.acciones {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   Grilla de productos
+   -------------------------------------------------------------------------- */
+
+.grilla {
+    background-color: var(--c-superficie);
+    border: 1px solid var(--c-borde);
+    border-radius: var(--c-radio);
+    border-collapse: separate;
+    border-spacing: 0;
+    box-shadow: var(--c-sombra);
+    margin-top: 1.25rem;
+    overflow: hidden;
+    width: 100%;
+}
+
+.grilla th {
+    background-color: #1e293b;
+    color: #f8fafc;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.grilla td {
+    border-top: 1px solid var(--c-borde);
+    color: var(--c-texto);
+    padding: 0.7rem 1rem;
+    vertical-align: middle;
+}
+
+.grilla tbody tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+.grilla tbody tr:hover {
+    background-color: #eef2ff;
+}
+
+/* --------------------------------------------------------------------------
+   Ajustes responsivos
+   -------------------------------------------------------------------------- */
+
+@media screen and (max-width: 576px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .formulario {
+        padding: 1.25rem;
+    }
+
+    .acciones {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .acciones .btn {
+        width: 100%;
+    }
+
+    .grilla {
+        display: block;
+        overflow-x: auto;
+    }
+}
