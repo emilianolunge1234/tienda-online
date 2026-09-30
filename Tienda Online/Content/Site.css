@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    Tienda Online - hoja de estilos principal
    Se carga después de bootstrap.css (Bundle.config -> ~/Content/css),
    por lo que puede ajustar lo que necesite sin perder especificidad.
@@ -124,6 +124,22 @@ hr {
 .hero {
     margin-bottom: 2rem;
     padding-top: 0.5rem;
+}
+
+.visitas {
+    display: inline-block;
+    background-color: var(--c-superficie);
+    border: 1px solid var(--c-borde);
+    border-radius: 20px;
+    padding: 0.25rem 0.85rem;
+    font-size: 0.9rem;
+    color: var(--c-texto-suave);
+    margin-top: 0.5rem;
+}
+
+.visitas span {
+    font-weight: 600;
+    color: var(--c-primario);
 }
 
 .menu-grid {

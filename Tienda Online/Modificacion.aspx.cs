@@ -16,10 +16,6 @@ namespace Tienda_Online
             }
         }
 
-        /// <summary>
-        /// Llena el DropDownList de productos con su categoría (JOIN) usando
-        /// SqlConnection + SqlCommand + SqlDataAdapter (ADO.NET explícito).
-        /// </summary>
         private void CargarListaProductos()
         {
             const string sql = "SELECT p.idProducto, " +
@@ -42,9 +38,6 @@ namespace Tienda_Online
             }
         }
 
-        /// <summary>
-        /// Llena el DropDownList de categorías para poder cambiar la asignación.
-        /// </summary>
         private void CargarCategorias()
         {
             const string sql = "SELECT idCategoria, descripcion FROM categorias ORDER BY descripcion";
@@ -63,11 +56,6 @@ namespace Tienda_Online
             }
         }
 
-        /// <summary>
-        /// Trae los datos actuales del producto elegido y los deja en el formulario.
-        /// Guardamos una copia de los valores originales en ViewState para poder
-        /// comprobar después si el usuario modificó algo.
-        /// </summary>
         protected void btnCargar_Click(object sender, EventArgs e)
         {
             if (!Page.IsValid)
@@ -125,10 +113,6 @@ namespace Tienda_Online
             Mostrar("Datos cargados. Editá los campos y presioná Guardar cambios.", true);
         }
 
-        /// <summary>
-        /// Guarda los cambios, siempre y cuando el usuario haya modificado
-        /// al menos un campo respecto de los valores originales.
-        /// </summary>
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
             if (!Page.IsValid)
@@ -190,7 +174,6 @@ namespace Tienda_Online
                 parametroNombre.Value = nombreNuevo;
                 comando.Parameters.Add(parametroNombre);
 
-                // DECIMAL(10,2): sin Scale = 2 se truncan los decimales.
                 SqlParameter parametroPrecio = new SqlParameter("@precio", SqlDbType.Decimal);
                 parametroPrecio.Precision = 10;
                 parametroPrecio.Scale = 2;
@@ -210,8 +193,6 @@ namespace Tienda_Online
 
             if (filas == 1)
             {
-                // Los originales ahora pasan a ser los valores recién guardados,
-                // así la próxima validación parte desde el estado actual.
                 ViewState["OriginalNombre"] = nombreNuevo;
                 ViewState["OriginalPrecio"] = precio;
                 ViewState["OriginalCategoria"] = ddlCategoria.SelectedValue;

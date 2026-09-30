@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Baja de producto" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Baja.aspx.cs" Inherits="Tienda_Online.Baja" %>
+<%@ Page Title="Baja de producto" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Baja.aspx.cs" Inherits="Tienda_Online.Baja" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -43,9 +43,7 @@
             </asp:GridView>
 
             <p class="nota">
-                El <code>DELETE</code> afecta <strong>únicamente</strong> la fila de <code>productos</code>.
-                La tabla <code>categorias</code> no se modifica: la clave foránea está definida sin
-                acción en cascada, así que las categorías quedan intactas.
+                <strong>Atención:</strong> La eliminación es definitiva y afecta exclusivamente al producto seleccionado. Las categorías del catálogo permanecen intactas.
             </p>
         </section>
 

@@ -15,10 +15,6 @@ namespace Tienda_Online
             }
         }
 
-        /// <summary>
-        /// Llena el DropDownList con las categorías existentes usando
-        /// SqlConnection + SqlCommand + SqlDataAdapter (ADO.NET explícito).
-        /// </summary>
         private void CargarCategorias()
         {
             const string sql = "SELECT idCategoria, descripcion FROM categorias ORDER BY descripcion";
@@ -69,7 +65,6 @@ namespace Tienda_Online
                 parametroNombre.Value = txtNombre.Text.Trim();
                 comando.Parameters.Add(parametroNombre);
 
-                // DECIMAL(10,2): sin Scale = 2 se truncan los decimales.
                 SqlParameter parametroPrecio = new SqlParameter("@precio", SqlDbType.Decimal);
                 parametroPrecio.Precision = 10;
                 parametroPrecio.Scale = 2;

@@ -1,11 +1,11 @@
-﻿<%@ Page Title="Consulta de productos" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Consulta.aspx.cs" Inherits="Tienda_Online.Consulta" %>
+<%@ Page Title="Consulta de productos" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Consulta.aspx.cs" Inherits="Tienda_Online.Consulta" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <main>
         <section class="pagina" aria-labelledby="tituloConsulta">
             <h1 id="tituloConsulta">Consulta de productos</h1>
-            <p class="lead">Listado completo de productos con su categoría, obtenido con un <strong>INNER JOIN</strong> entre <code>productos</code> y <code>categorias</code>.</p>
+            <p class="lead">Listado completo de productos junto a su categoría correspondiente.</p>
 
             <div class="acciones">
                 <asp:HyperLink ID="lnkVolver" runat="server"
@@ -32,12 +32,10 @@
             </asp:GridView>
 
             <p class="nota">
-                La columna <strong>Categoría</strong> no existe en la tabla <code>productos</code>:
-                se resuelve en el momento con el JOIN, usando la clave foránea <code>idCategoria</code>.
+                <strong>Nota:</strong> Los datos se presentan unificados, asociando cada producto con la información completa de su categoría.
             </p>
         </section>
 
-        <%-- SELECT con JOIN entre las dos tablas (consigna de Consulta) --%>
         <asp:SqlDataSource ID="dsProductos" runat="server"
             ConnectionString="<%$ ConnectionStrings:TiendaOnlineDB %>"
             SelectCommand="SELECT p.idProducto,

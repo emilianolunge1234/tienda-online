@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Inicio" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Tienda_Online._Default" %>
+<%@ Page Title="Inicio" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Tienda_Online._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -6,6 +6,7 @@
         <section class="hero" aria-labelledby="tituloPrincipal">
             <h1 id="tituloPrincipal">Tienda Online</h1>
             <p class="lead">Administración de productos y categorías. Elegí una operación para comenzar.</p>
+            <div class="visitas">Visitas al sitio: <asp:Label ID="lblVisitas" runat="server" /></div>
         </section>
 
         <div class="menu-grid">

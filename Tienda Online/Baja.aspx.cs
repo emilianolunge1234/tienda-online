@@ -8,9 +8,6 @@ namespace Tienda_Online
 {
     public partial class Baja : Page
     {
-        /// <summary>
-        /// Listado con JOIN para mostrar producto + categoría.
-        /// </summary>
         private const string SqlListado =
             "SELECT p.idProducto, " +
             "p.nombre, " +
@@ -28,10 +25,6 @@ namespace Tienda_Online
             }
         }
 
-        /// <summary>
-        /// Enlaza la grilla con SqlDataAdapter + DataTable (ADO.NET explícito),
-        /// en lugar del origen de datos declarativo que se quitó de la página.
-        /// </summary>
         private void CargarListado()
         {
             using (SqlConnection conexion = Utilidades.AbrirConexion())
@@ -46,10 +39,6 @@ namespace Tienda_Online
             }
         }
 
-        /// <summary>
-        /// Se dispara cuando se hace clic en "Eliminar" de una fila.
-        /// Borra únicamente esa fila de la tabla productos.
-        /// </summary>
         protected void gvProductos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (!string.Equals(e.CommandName, "Eliminar", StringComparison.Ordinal))
@@ -80,8 +69,7 @@ namespace Tienda_Online
 
             if (filas == 1)
             {
-                Mostrar("Producto eliminado correctamente. Las categorías no se modificaron.", true);
-                // Sin origen de datos declarativo: hay que volver a enlazar la grilla a mano.
+                Mostrar("Producto eliminado correctamente.", true);
                 CargarListado();
             }
             else
