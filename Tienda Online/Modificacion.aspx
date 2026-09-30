@@ -12,7 +12,6 @@
                 <div class="campo">
                     <asp:Label ID="lblProducto" runat="server" AssociatedControlID="ddlProducto" Text="Producto a modificar" />
                     <asp:DropDownList ID="ddlProducto" runat="server"
-                        DataSourceID="dsProductosLista"
                         DataTextField="descripcionProducto"
                         DataValueField="idProducto"
                         AppendDataBoundItems="True">
@@ -64,7 +63,6 @@
                 <div class="campo">
                     <asp:Label ID="lblCategoria" runat="server" AssociatedControlID="ddlCategoria" Text="Categoría" />
                     <asp:DropDownList ID="ddlCategoria" runat="server"
-                        DataSourceID="dsCategorias"
                         DataTextField="descripcion"
                         DataValueField="idCategoria"
                         AppendDataBoundItems="True">
@@ -92,48 +90,6 @@
 
             </div>
         </section>
-
-        <%-- Lista desplegable: producto con su categoría (JOIN) --%>
-        <asp:SqlDataSource ID="dsProductosLista" runat="server"
-            ConnectionString="<%$ ConnectionStrings:TiendaOnlineDB %>"
-            SelectCommand="SELECT p.idProducto,
-                                  p.nombre + ' - ' + c.descripcion AS descripcionProducto
-                           FROM productos p
-                           INNER JOIN categorias c ON c.idCategoria = p.idCategoria
-                           ORDER BY p.nombre" />
-
-        <%-- Devuelve los valores actuales del producto elegido --%>
-        <asp:SqlDataSource ID="dsProducto" runat="server"
-            ConnectionString="<%$ ConnectionStrings:TiendaOnlineDB %>"
-            SelectCommand="SELECT nombre, precio, idCategoria
-                           FROM productos
-                           WHERE idProducto = @idProducto">
-            <SelectParameters>
-                <asp:ControlParameter Name="idProducto" ControlID="ddlProducto"
-                    PropertyName="SelectedValue" Type="Int32" />
-            </SelectParameters>
-        </asp:SqlDataSource>
-
-        <%-- Categorías para poder cambiar la asignación --%>
-        <asp:SqlDataSource ID="dsCategorias" runat="server"
-            ConnectionString="<%$ ConnectionStrings:TiendaOnlineDB %>"
-            SelectCommand="SELECT idCategoria, descripcion FROM categorias ORDER BY descripcion" />
-
-        <%-- UPDATE del producto --%>
-        <asp:SqlDataSource ID="dsActualizar" runat="server"
-            ConnectionString="<%$ ConnectionStrings:TiendaOnlineDB %>"
-            UpdateCommand="UPDATE productos
-                              SET nombre = @nombre,
-                                  precio = @precio,
-                                  idCategoria = @idCategoria
-                            WHERE idProducto = @idProducto">
-            <UpdateParameters>
-                <asp:Parameter Name="nombre" Type="String" />
-                <asp:Parameter Name="precio" Type="Decimal" />
-                <asp:Parameter Name="idCategoria" Type="Int32" />
-                <asp:Parameter Name="idProducto" Type="Int32" />
-            </UpdateParameters>
-        </asp:SqlDataSource>
 
     </main>
 

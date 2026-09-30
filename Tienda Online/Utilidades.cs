@@ -1,3 +1,5 @@
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Globalization;
 
 namespace Tienda_Online
@@ -26,12 +28,26 @@ namespace Tienda_Online
         }
 
         /// <summary>
-        /// Serializa el precio con la misma cultura que usa el parámetro Type="Decimal"
-        /// del SqlDataSource, para que lo lea igual al guardar.
+        /// Serializa el precio con la cultura actual (es-ES: 25.999,50) para
+        /// mostrarlo en los formularios. El guardado no pasa por acá: el
+        /// parámetro SqlParameter recibe el decimal directamente.
         /// </summary>
         public static string FormatearPrecio(decimal precio)
         {
             return precio.ToString(CultureInfo.CurrentCulture);
+        }
+
+        /// <summary>
+        /// Abre y devuelve una conexión a la base TiendaOnline.
+        /// La conexión sale ya abierta: quien la usa debe envolverla en un bloque
+        /// using para que se cierre (y se devuelva al pool) automáticamente.
+        /// </summary>
+        public static SqlConnection AbrirConexion()
+        {
+            SqlConnection conexion = new SqlConnection(
+                ConfigurationManager.ConnectionStrings["TiendaOnlineDB"].ConnectionString);
+            conexion.Open();
+            return conexion;
         }
     }
 }

@@ -35,7 +35,6 @@
                 <div class="campo">
                     <asp:Label ID="lblCategoria" runat="server" AssociatedControlID="ddlCategoria" Text="Categoría" />
                     <asp:DropDownList ID="ddlCategoria" runat="server"
-                        DataSourceID="dsCategorias"
                         DataTextField="descripcion"
                         DataValueField="idCategoria"
                         AppendDataBoundItems="True">
@@ -61,22 +60,6 @@
 
             </div>
         </section>
-
-        <%-- Llena el DropDownList con las categorías existentes --%>
-        <asp:SqlDataSource ID="dsCategorias" runat="server"
-            ConnectionString="<%$ ConnectionStrings:TiendaOnlineDB %>"
-            SelectCommand="SELECT idCategoria, descripcion FROM categorias ORDER BY descripcion" />
-
-        <%-- Ejecuta el INSERT cuando llamamos dsProductos.Insert() --%>
-        <asp:SqlDataSource ID="dsProductos" runat="server"
-            ConnectionString="<%$ ConnectionStrings:TiendaOnlineDB %>"
-            InsertCommand="INSERT INTO productos (nombre, precio, idCategoria) VALUES (@nombre, @precio, @idCategoria)">
-            <InsertParameters>
-                <asp:Parameter Name="nombre" Type="String" />
-                <asp:Parameter Name="precio" Type="Decimal" />
-                <asp:Parameter Name="idCategoria" Type="Int32" />
-            </InsertParameters>
-        </asp:SqlDataSource>
 
     </main>
 

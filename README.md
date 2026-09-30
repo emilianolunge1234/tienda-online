@@ -26,7 +26,7 @@ Abrir **SQL Server Management Studio** y ejecutar el script completo
 ```sql
 CREATE DATABASE TiendaOnline;
 USE TiendaOnline;
--- ... crea tablas, datos de ejemplo y la vista
+-- ... crea las tablas y carga los datos de ejemplo
 ```
 
 El script crea:
@@ -62,7 +62,7 @@ Tienda Online/
 ├── Consulta.aspx                    Listado con JOIN (SELECT)
 ├── Modificacion.aspx                Modificación de producto (UPDATE)
 ├── Baja.aspx                        Baja de producto (DELETE)
-├── Utilidades.cs                    Parseo y formato de precios
+├── Utilidades.cs                    Parseo de precios y conexión ADO.NET
 ├── Content/Site.css                 Hoja de estilos externa
 ├── database/creacion.sql            Script de creación de la BD
 └── Web.config                       Cadena de conexión y configuración
@@ -76,6 +76,10 @@ Tienda Online/
 - **4 formularios Web Forms** — alta, consulta, modificación y baja, cada uno en
   su propio `.aspx` con su *code-behind*.
 - **Navegación con `HyperLink`** — la portada enlaza a los cuatro formularios.
+- **`SqlConnection` y `SqlCommand`** — alta, modificación y baja ejecutan sus
+  sentencias con ADO.NET explícito (`Utilidades.AbrirConexion()`), parámetros
+  `@nombre`, `@precio`, `@idCategoria` y `@idProducto`, y `using` para el
+  cierre de la conexión. Ninguna concatenación de datos del usuario en el SQL.
 - **`SqlDataSource` con `INNER JOIN`** — la consulta muestra la descripción de
   la categoría junto a cada producto.
 - **Más de 5 registros** — 5 categorías y 6 productos de ejemplo.
@@ -92,6 +96,9 @@ Tienda Online/
 
 - Los precios usan `DECIMAL(10,2)` y se parsean aceptando coma **o** punto como
   separador decimal (`Utilidades.TryParsePrecio`).
+- El parámetro de precio se declara con `SqlDbType.Decimal`, `Precision = 10` y
+  `Scale = 2`, y recibe el `decimal` de C# directamente — así no interviene la
+  cultura del servidor y no se truncan los decimales.
 - Las páginas `.aspx` se guardan con **BOM UTF-8** para que los acentos se
   rendericen correctamente.
 - El modo de redirección de FriendlyUrls está en `RedirectMode.Off` para que

@@ -16,7 +16,6 @@
             <asp:Label ID="lblMensaje" runat="server" CssClass="mensaje" />
 
             <asp:GridView ID="gvProductos" runat="server"
-                DataSourceID="dsListado"
                 DataKeyNames="idProducto"
                 CssClass="grilla"
                 AutoGenerateColumns="False"
@@ -49,26 +48,6 @@
                 acción en cascada, así que las categorías quedan intactas.
             </p>
         </section>
-
-        <%-- Listado con JOIN para mostrar producto + categoría --%>
-        <asp:SqlDataSource ID="dsListado" runat="server"
-            ConnectionString="<%$ ConnectionStrings:TiendaOnlineDB %>"
-            SelectCommand="SELECT p.idProducto,
-                                  p.nombre,
-                                  p.precio,
-                                  c.descripcion AS categoria
-                           FROM productos p
-                           INNER JOIN categorias c ON c.idCategoria = p.idCategoria
-                           ORDER BY p.idProducto" />
-
-        <%-- Borra SOLO de productos. Sin cascada sobre categorias. --%>
-        <asp:SqlDataSource ID="dsEliminar" runat="server"
-            ConnectionString="<%$ ConnectionStrings:TiendaOnlineDB %>"
-            DeleteCommand="DELETE FROM productos WHERE idProducto = @idProducto">
-            <DeleteParameters>
-                <asp:Parameter Name="idProducto" Type="Int32" />
-            </DeleteParameters>
-        </asp:SqlDataSource>
 
     </main>
 

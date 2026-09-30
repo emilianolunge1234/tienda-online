@@ -28,15 +28,5 @@ namespace Tienda_Online
         /// Control gvProductos.
         /// </summary>
         protected global::System.Web.UI.WebControls.GridView gvProductos;
-
-        /// <summary>
-        /// Control dsListado.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.SqlDataSource dsListado;
-
-        /// <summary>
-        /// Control dsEliminar.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.SqlDataSource dsEliminar;
     }
 }

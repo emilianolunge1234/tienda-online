@@ -1,5 +1,6 @@
 using System;
 using System.Data;
+using System.Data.SqlClient;
 using System.Web.UI;
 
 namespace Tienda_Online
@@ -8,6 +9,58 @@ namespace Tienda_Online
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                CargarListaProductos();
+                CargarCategorias();
+            }
+        }
+
+        /// <summary>
+        /// Llena el DropDownList de productos con su categoría (JOIN) usando
+        /// SqlConnection + SqlCommand + SqlDataAdapter (ADO.NET explícito).
+        /// </summary>
+        private void CargarListaProductos()
+        {
+            const string sql = "SELECT p.idProducto, " +
+                               "p.nombre + ' - ' + c.descripcion AS descripcionProducto " +
+                               "FROM productos p " +
+                               "INNER JOIN categorias c ON c.idCategoria = p.idCategoria " +
+                               "ORDER BY p.nombre";
+
+            using (SqlConnection conexion = Utilidades.AbrirConexion())
+            using (SqlCommand comando = new SqlCommand(sql, conexion))
+            using (SqlDataAdapter adaptador = new SqlDataAdapter(comando))
+            {
+                DataTable tabla = new DataTable();
+                adaptador.Fill(tabla);
+
+                ddlProducto.DataSource = tabla;
+                ddlProducto.DataTextField = "descripcionProducto";
+                ddlProducto.DataValueField = "idProducto";
+                ddlProducto.DataBind();
+            }
+        }
+
+        /// <summary>
+        /// Llena el DropDownList de categorías para poder cambiar la asignación.
+        /// </summary>
+        private void CargarCategorias()
+        {
+            const string sql = "SELECT idCategoria, descripcion FROM categorias ORDER BY descripcion";
+
+            using (SqlConnection conexion = Utilidades.AbrirConexion())
+            using (SqlCommand comando = new SqlCommand(sql, conexion))
+            using (SqlDataAdapter adaptador = new SqlDataAdapter(comando))
+            {
+                DataTable tabla = new DataTable();
+                adaptador.Fill(tabla);
+
+                ddlCategoria.DataSource = tabla;
+                ddlCategoria.DataTextField = "descripcion";
+                ddlCategoria.DataValueField = "idCategoria";
+                ddlCategoria.DataBind();
+            }
         }
 
         /// <summary>
@@ -22,20 +75,48 @@ namespace Tienda_Online
                 return;
             }
 
-            DataView filas = (DataView)dsProducto.Select(DataSourceSelectArguments.Empty);
-
-            if (filas == null || filas.Count == 0)
+            int idProducto;
+            if (!int.TryParse(ddlProducto.SelectedValue, out idProducto))
             {
                 Mostrar("No se encontró el producto seleccionado.", false);
                 return;
             }
 
-            DataRowView fila = filas[0];
-            decimal precio = Convert.ToDecimal(fila["precio"]);
+            const string sql = "SELECT nombre, precio, idCategoria FROM productos WHERE idProducto = @idProducto";
 
-            txtNombre.Text = Convert.ToString(fila["nombre"]).Trim();
+            bool encontrado = false;
+            string nombre = string.Empty;
+            decimal precio = 0m;
+            int idCategoria = 0;
+
+            using (SqlConnection conexion = Utilidades.AbrirConexion())
+            using (SqlCommand comando = new SqlCommand(sql, conexion))
+            {
+                SqlParameter parametro = new SqlParameter("@idProducto", SqlDbType.Int);
+                parametro.Value = idProducto;
+                comando.Parameters.Add(parametro);
+
+                using (SqlDataReader lector = comando.ExecuteReader())
+                {
+                    if (lector.Read())
+                    {
+                        encontrado = true;
+                        nombre = Convert.ToString(lector["nombre"]).Trim();
+                        precio = Convert.ToDecimal(lector["precio"]);
+                        idCategoria = Convert.ToInt32(lector["idCategoria"]);
+                    }
+                }
+            }
+
+            if (!encontrado)
+            {
+                Mostrar("No se encontró el producto seleccionado.", false);
+                return;
+            }
+
+            txtNombre.Text = nombre;
             txtPrecio.Text = Utilidades.FormatearPrecio(precio);
-            ddlCategoria.SelectedValue = Convert.ToInt32(fila["idCategoria"]).ToString();
+            ddlCategoria.SelectedValue = idCategoria.ToString();
 
             ViewState["OriginalNombre"] = txtNombre.Text;
             ViewState["OriginalPrecio"] = precio;
@@ -84,12 +165,48 @@ namespace Tienda_Online
                 return;
             }
 
-            dsActualizar.UpdateParameters["nombre"].DefaultValue = nombreNuevo;
-            dsActualizar.UpdateParameters["precio"].DefaultValue = Utilidades.FormatearPrecio(precio);
-            dsActualizar.UpdateParameters["idCategoria"].DefaultValue = ddlCategoria.SelectedValue;
-            dsActualizar.UpdateParameters["idProducto"].DefaultValue = ddlProducto.SelectedValue;
+            int idProducto;
+            if (!int.TryParse(ddlProducto.SelectedValue, out idProducto))
+            {
+                Mostrar("No se encontró el producto seleccionado.", false);
+                return;
+            }
 
-            int filas = dsActualizar.Update();
+            int idCategoria;
+            if (!int.TryParse(ddlCategoria.SelectedValue, out idCategoria))
+            {
+                Mostrar("Tenés que elegir una categoría.", false);
+                return;
+            }
+
+            const string sql = "UPDATE productos SET nombre = @nombre, precio = @precio, idCategoria = @idCategoria WHERE idProducto = @idProducto";
+
+            int filas;
+
+            using (SqlConnection conexion = Utilidades.AbrirConexion())
+            using (SqlCommand comando = new SqlCommand(sql, conexion))
+            {
+                SqlParameter parametroNombre = new SqlParameter("@nombre", SqlDbType.VarChar, 100);
+                parametroNombre.Value = nombreNuevo;
+                comando.Parameters.Add(parametroNombre);
+
+                // DECIMAL(10,2): sin Scale = 2 se truncan los decimales.
+                SqlParameter parametroPrecio = new SqlParameter("@precio", SqlDbType.Decimal);
+                parametroPrecio.Precision = 10;
+                parametroPrecio.Scale = 2;
+                parametroPrecio.Value = precio;
+                comando.Parameters.Add(parametroPrecio);
+
+                SqlParameter parametroCategoria = new SqlParameter("@idCategoria", SqlDbType.Int);
+                parametroCategoria.Value = idCategoria;
+                comando.Parameters.Add(parametroCategoria);
+
+                SqlParameter parametroId = new SqlParameter("@idProducto", SqlDbType.Int);
+                parametroId.Value = idProducto;
+                comando.Parameters.Add(parametroId);
+
+                filas = comando.ExecuteNonQuery();
+            }
 
             if (filas == 1)
             {

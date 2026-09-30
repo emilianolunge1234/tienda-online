@@ -98,25 +98,5 @@ namespace Tienda_Online
         /// Control lblMensaje.
         /// </summary>
         protected global::System.Web.UI.WebControls.Label lblMensaje;
-
-        /// <summary>
-        /// Control dsProductosLista.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.SqlDataSource dsProductosLista;
-
-        /// <summary>
-        /// Control dsProducto.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.SqlDataSource dsProducto;
-
-        /// <summary>
-        /// Control dsCategorias.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.SqlDataSource dsCategorias;
-
-        /// <summary>
-        /// Control dsActualizar.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.SqlDataSource dsActualizar;
     }
 }
